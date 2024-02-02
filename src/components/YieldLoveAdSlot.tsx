@@ -38,7 +38,7 @@ const YieldloveAdSlot: React.FC<YieldloveAdSlotProps> = ({ adUnitCode, sizes, id
 
         // Cleanup function to run when the component is unmounted
         return () => {
-            if(googletag && yieldlove_cmd) {
+            if(googletag) {
                 // Find the ad slot in the pubads and destroy it
                 const adSlot = googletag?.pubads?.().getSlots().find((slot: any) => slot.getSlotElementId() === id);
                 if (adSlot) {

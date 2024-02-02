@@ -55,6 +55,13 @@ useEffect(() => {
     });
 }, []);
 ```
+NOTE THIS HAS TO BE EXECUDED BEFORE WE LOAD THOSE DVO SCRIPTS
+```bash
+<head>
+  <Script src="https://cdn-a.yieldlove.com/v2/yieldlove.js?yieldlove.com" async={true}/>
+  <Script src="https://www.googletagservices.com/tag/js/gpt.js" strategy="beforeInteractive" async={true}/>
+</head>
+```
 
 ### 3. Create component for your ads
 
@@ -109,16 +116,12 @@ Your Ad component should return div with id.
 <div id={id} />
 ```
 
-
-dodati ovde objasnjenje o tim parametrima->
-adUnitCode - 
-id
-sizes
 ### Example Usage of your ad component
 ```bash
 <YieldloveAdSlot adUnitCode="/53015287/yieldlove.com_hb_test_970x90_1" sizes={[1280, 180]}
 id="div-gpt-ad-1234567890123-0"/>
 ```
+
 
 ## About this app
 
