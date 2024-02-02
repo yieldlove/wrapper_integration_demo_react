@@ -2,7 +2,17 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
-First, run the development server:
+First, install dependencies 
+
+```bash
+npm i
+# or
+yarn
+# or
+pnpm i
+
+```
+After it run the development server:
 
 ```bash
 npm run dev
@@ -16,21 +26,102 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Integrating Yieldlove into your NextJS project
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### 1.  Add Scripts to the head tag / Next Head component
+```bash
+<head>
+  <Script src="https://cdn-a.yieldlove.com/v2/yieldlove.js?yieldlove.com" async={true}/>
+  <Script src="https://www.googletagservices.com/tag/js/gpt.js" strategy="beforeInteractive" async={true}/>
+</head>
+```
+### 2. Add useEffect Block to Client-Side Rendered Component or Layout
 
-## Learn More
+Open the file where your main application logic or layout is defined , and add the following `useEffect` block:
+```bash
+// Import the necessary dependencies
+import { useEffect } from 'react';
 
-To learn more about Next.js, take a look at the following resources:
+// Inside your component or layout...
+useEffect(() => {
+    window.yieldlove_prevent_autostart = true;
+    window.yieldlove_cmd = window.yieldlove_cmd || []
+    const googletag = window.googletag || {};
+    googletag.cmd = googletag.cmd || [];
+    googletag.cmd.push(function () {
+        googletag.pubads().disableInitialLoad();
+        googletag.pubads().enableSingleRequest();
+        googletag.enableServices();
+    });
+}, []);
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 3. Create component for your ads
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Extend the Window interface to include googletag and yieldlove_cmd
+```bash
+declare global {
+    interface Window {
+        googletag?: any; // Replace 'any' with the actual type if possible
+        yieldlove_cmd?: any; // Replace 'any' with the actual type if possible
+    }
+}
+```
 
-## Deploy on Vercel
+Your component should accept these params:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+interface YieldloveAdSlotProps {
+    adUnitCode: string;
+    sizes: Array<number>;
+    id: string;
+}
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Add the following `useEffect` block. It is responsible for handling the display, cloning, and cleanup of an ad.
+```bash
+useEffect(() => {
+        const { googletag, yieldlove_cmd } = window || {};
+        googletag.cmd.push(() => {
+            googletag.pubads().display(adUnitCode, sizes, id);
+        });
+
+        yieldlove_cmd.push(() => {
+            (window as any).YLHH.bidder.cloneUnit(adUnitCode, id, {
+                startAuction: true,
+                skipDuplex: true,
+            });
+        });
+
+        return () => {
+            if(googletag && yieldlove_cmd) {
+                const adSlot = googletag?.pubads?.().getSlots().find((slot: any) => slot.getSlotElementId() === id);
+                if (adSlot) {
+                    googletag.destroySlots([adSlot]);
+                }
+            }
+        };
+    }, []);
+```
+Your Ad component should return div with id.
+
+```bash
+<div id={id} />
+```
+
+
+dodati ovde objasnjenje o tim parametrima->
+adUnitCode - 
+id
+sizes
+### Example Usage of your ad component
+```bash
+<YieldloveAdSlot adUnitCode="/53015287/yieldlove.com_hb_test_970x90_1" sizes={[1280, 180]}
+id="div-gpt-ad-1234567890123-0"/>
+```
+
+## About this app
+
+In this app you will find 2 routes
+- / home route with one ad
+- /testPage route with 2 ads
