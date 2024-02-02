@@ -101,12 +101,12 @@ useEffect(() => {
         });
 
         return () => {
-            if(googletag && yieldlove_cmd) {
-                const adSlot = googletag?.pubads?.().getSlots().find((slot: any) => slot.getSlotElementId() === id);
+            googletag.cmd.push(() => {
+                const adSlot = googletag.pubads().getSlots().find((slot: any) => slot.getSlotElementId() === id);
                 if (adSlot) {
                     googletag.destroySlots([adSlot]);
                 }
-            }
+            })
         };
     }, []);
 ```
