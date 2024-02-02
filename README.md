@@ -32,7 +32,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 ```bash
 <head>
   <Script src="https://cdn-a.yieldlove.com/v2/yieldlove.js?yieldlove.com" async={true}/>
-  <Script src="https://www.googletagservices.com/tag/js/gpt.js" strategy="beforeInteractive" async={true}/>
+  <Script src="https://securepubads.g.doubleclick.net/tag/js/gpt.js" strategy="beforeInteractive" async={true}/>
 </head>
 ```
 ### 2. Add useEffect Block to Client-Side Rendered Component or Layout
@@ -59,7 +59,7 @@ NOTE THIS HAS TO BE EXECUDED BEFORE WE LOAD THOSE DVO SCRIPTS
 ```bash
 <head>
   <Script src="https://cdn-a.yieldlove.com/v2/yieldlove.js?yieldlove.com" async={true}/>
-  <Script src="https://www.googletagservices.com/tag/js/gpt.js" strategy="beforeInteractive" async={true}/>
+  <Script src="https://securepubads.g.doubleclick.net/tag/js/gpt.js" strategy="beforeInteractive" async={true}/>
 </head>
 ```
 
