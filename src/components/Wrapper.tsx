@@ -12,9 +12,13 @@ declare global {
         yieldlove_prevent_autostart: boolean,
         YLHH:any;
     }
+
+}
+interface WrapperProps {
+    lazyLoad?:boolean
 }
 
-const Wrapper: React.FC<any> = ({additionalAdd}) => {
+const Wrapper: React.FC<WrapperProps> = ({lazyLoad}) => {
     useEffect(() => {
         window.yieldlove_prevent_autostart = true;
         window.yieldlove_cmd = window.yieldlove_cmd || []
@@ -29,10 +33,9 @@ const Wrapper: React.FC<any> = ({additionalAdd}) => {
 
     return  <div style={{ padding: '20px'}}>
         <div>
-            <YieldloveAdSlot adUnitCode="/53015287/yieldlove.com_hb_test_970x90_1" sizes={[1280, 180]}
+            <YieldloveAdSlot adUnitCode="/53015287/yieldlove.es_d_970x250_1" sizes={[1280, 180]}
                              id="div-gpt-ad-1234567890123-0"/>
-            {additionalAdd&& (<YieldloveAdSlot adUnitCode="/53015287/yieldlove.com_hb_test_300x250_1" sizes={[1280, 180]}
-                             id="div-gpt-ad-1234567890130-0"/>)}
+            {lazyLoad && (<YieldloveAdSlot adUnitCode="/53015287/yieldlove.es_d_300x600_1" sizes={[1280, 180]} id="div-gpt-ad-1234567890130-1" lazyLoad/> )}
         </div>
     </div>;
 };

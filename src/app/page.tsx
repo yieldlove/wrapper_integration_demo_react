@@ -1,7 +1,7 @@
 import styles from './page.module.css'
 import dynamic from "next/dynamic";
 import React from "react";
-const Wrapper = dynamic(() => import('@/components/Wrapper'), {ssr: false});
+const Wrapper = dynamic(() => import('@/components/Wrapper'));
 
 export default function Home() {
     return (

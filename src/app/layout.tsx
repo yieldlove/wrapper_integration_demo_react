@@ -1,3 +1,4 @@
+"use client";
 import { Inter } from 'next/font/google'
 import './globals.css'
 import Link from 'next/link'
@@ -14,14 +15,11 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <head>
-          {/* Add Yieldlove script */}
-          <Script src="https://cdn-a.yieldlove.com/v2/yieldlove.js?yieldlove.com" strategy="lazyOnload" async={true}/>
-          {/* Add Google Tag Services script */}
-          <Script src="https://securepubads.g.doubleclick.net/tag/js/gpt.js" strategy="lazyOnload" async={true}/>
-
-      </head>
       <body className={inter.className}>
+      {/* Add Yieldlove script */}
+      <Script src="https://cdn-a.yieldlove.com/v2/yieldlove.js?yieldlove.es" async/>
+      {/* Add Google Tag Services script */}
+      <Script src="https://securepubads.g.doubleclick.net/tag/js/gpt.js" async/>
       <nav style={{ padding: '20px'}}>
           <Link href="/" style={{ marginRight: '20px',color:"black", height:'10px',backgroundColor:"lightblue",borderRadius:"5px",textAlign: "center",
               padding: "13px 16px" }}>Home</Link>

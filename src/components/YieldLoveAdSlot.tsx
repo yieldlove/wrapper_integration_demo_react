@@ -14,10 +14,11 @@ interface YieldloveAdSlotProps {
     adUnitCode: string;
     sizes: Array<number>;
     id: string;
+    lazyLoad?:boolean
 }
 
 // Define the YieldloveAdSlot functional component
-const YieldloveAdSlot: React.FC<YieldloveAdSlotProps> = ({ adUnitCode, sizes, id }) => {
+const YieldloveAdSlot: React.FC<YieldloveAdSlotProps> = ({ adUnitCode, sizes, id ,lazyLoad=false}) => {
     useEffect(() => {
         // Destructure googletag and yieldlove_cmd from the window object
         const { googletag, yieldlove_cmd } = window || {};
@@ -28,14 +29,15 @@ const YieldloveAdSlot: React.FC<YieldloveAdSlotProps> = ({ adUnitCode, sizes, id
             googletag.pubads().display(adUnitCode, sizes, id);
         });
 
-        yieldlove_cmd.push(() => {
-            // Clone the ad unit using YLHH.bidder
-            (window as any).YLHH.bidder.cloneUnit(adUnitCode, id, {
-                startAuction: true,
-                skipDuplex: true,
-            });
-        });
-
+        if (lazyLoad) {
+            yieldlove_cmd.push(() => {
+                (window as any).YLHH.utils.lazyLoad(id, cloneAdUnit);
+            })
+        }else {
+                yieldlove_cmd.push(() => {
+                    cloneAdUnit();
+                })
+        };
         // Cleanup function to run when the component is unmounted
         return () => {
             googletag.cmd.push(() => {
@@ -47,6 +49,14 @@ const YieldloveAdSlot: React.FC<YieldloveAdSlotProps> = ({ adUnitCode, sizes, id
             })
         };
     }, []); // Empty dependency array ensures the effect runs only once on mount
+
+
+    const cloneAdUnit = () => {
+        (window as any).YLHH.bidder.cloneUnit(adUnitCode, id, {
+            startAuction: true,
+            skipDuplex: true,
+        });
+    };
     return (
         <div style={{paddingTop: '20px'}}>
             <p>HERE IS AD {id}</p>
