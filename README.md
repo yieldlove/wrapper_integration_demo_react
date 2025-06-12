@@ -58,8 +58,8 @@ useEffect(() => {
 NOTE THIS HAS TO BE EXECUTED BEFORE WE LOAD THOSE TWO SCRIPTS
 ```bash
 <body>
-  <Script src="https://cdn-a.yieldlove.com/v2/yieldlove.js?yieldlove.com" async={true}/>
-  <Script src="https://securepubads.g.doubleclick.net/tag/js/gpt.js" strategy="beforeInteractive" async={true}/>
+  <Script src="https://cdn-a.yieldlove.com/v2/yieldlove.js?yieldlove.es" async/>
+  <Script src="https://securepubads.g.doubleclick.net/tag/js/gpt.js" async/>
 </body>
 ```
 
@@ -90,8 +90,8 @@ To maximize your ad revenue while maintaining optimal user experience in your SP
 #### 1. Script Loading Best Practices
 The following libraries should be loaded **only once** during the initial page load. Never reload these scripts during SPA navigation:
 ```javascript
-<Script src="https://cdn-a.yieldlove.com/v2/yieldlove.js?yieldlove.com" async={true}/>
-<Script src="https://securepubads.g.doubleclick.net/tag/js/gpt.js" strategy="beforeInteractive" async={true}/>
+<Script src="https://cdn-a.yieldlove.com/v2/yieldlove.js?yieldlove.es" async/>
+<Script src="https://securepubads.g.doubleclick.net/tag/js/gpt.js" async/>
 ```
 
 #### 2. Automated Ad Slot Reloading
